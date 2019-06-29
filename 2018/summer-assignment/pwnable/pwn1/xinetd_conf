@@ -1,0 +1,13 @@
+
+service pwn1
+{
+    disable = no
+    socket_type = stream
+    protocol    = tcp
+    wait        = no
+    user        = pwn1
+    bind        = 0.0.0.0
+    server      = /home/pwn1/pwn1
+    type        = UNLISTED
+    port        = 1001
+}

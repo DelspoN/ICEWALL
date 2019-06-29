@@ -1,0 +1,1 @@
+Decrypt the string "NHYK{HFJXFW_HNUMJW_NX_F_XMNKY_HNUMJW}"

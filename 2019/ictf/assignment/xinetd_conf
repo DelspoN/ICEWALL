@@ -1,0 +1,13 @@
+service assignment
+{
+    disable = no
+    socket_type = stream
+    protocol    = tcp
+    wait        = no
+    user        = assignment
+    bind        = 0.0.0.0
+    server      = /usr/bin/python
+    server_args = /home/assignment/check.py
+    type        = UNLISTED
+    port        = 1000
+}

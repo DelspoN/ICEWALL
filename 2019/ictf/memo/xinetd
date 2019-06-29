@@ -1,0 +1,12 @@
+service memo
+{
+    disable     = no
+    type        = UNLISTED
+    wait        = no
+    server      = /home/memo/memo
+    socket_type = stream
+    protocol    = tcp
+    user        = memo
+    port        = 33331
+    flags       = REUSE
+}

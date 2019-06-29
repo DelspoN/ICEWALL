@@ -1,0 +1,12 @@
+service format
+{
+    disable     = no
+    type        = UNLISTED
+    wait        = no
+    server      = /home/format/format
+    socket_type = stream
+    protocol    = tcp
+    user        = format
+    port        = 33338
+    flags       = REUSE
+}
