@@ -4,9 +4,11 @@ int login() {
   char id[32], pw[32], nic[32];
   int auth;
 
-  printf("ID : ");
+  printf("Here is stack addr : %p\n", &nic);
+
+  puts("Input your ID : ");
   scanf("%31s", id);
-  printf("PW : ");
+  puts("Input your PW : ");
   scanf("%31s", pw);
 
   auth = (!strcmp(id, "admin")  && !strcmp(pw, "p@ssw0rd"));
