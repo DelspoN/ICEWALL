@@ -31,7 +31,6 @@ int main() {
   while (1) {
     if (login() || isAuth) {
       system("echo 'Successful'");
-      break;
     }
     system("echo 'Failed'");
   }
