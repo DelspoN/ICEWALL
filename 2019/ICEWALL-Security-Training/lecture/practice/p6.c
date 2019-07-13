@@ -32,7 +32,9 @@ int main() {
     if (login() || isAuth) {
       system("echo 'Successful'");
     }
-    system("echo 'Failed'");
+    else {
+      system("echo 'Failed'");
+    }
   }
 
   return 0;
