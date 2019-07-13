@@ -12,3 +12,5 @@ all:
 	gcc -o p6_64_0 p6.c -z execstack -fno-stack-protector
 	gcc -o p6_64_1 p6.c -fno-stack-protector
 	gcc -o p6_64_2 p6.c
+	gcc -o p6_32_canary p6_canary.c -m32
+	gcc -o p6_64_canary p6_canary.c
