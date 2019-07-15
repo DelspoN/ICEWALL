@@ -1,0 +1,14 @@
+
+service pyjail0
+{
+    disable = no
+    socket_type = stream
+    protocol    = tcp
+    wait        = no
+    user        = pyjail0
+    bind        = 0.0.0.0
+    server      = /usr/bin/python
+    server_args = /home/pyjail0/pyjail0.py
+    type        = UNLISTED
+    port        = 1003
+}
