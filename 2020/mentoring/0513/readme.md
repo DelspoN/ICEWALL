@@ -219,5 +219,75 @@ d@ubuntu:~/test$ ifconfig
 
 
 
-### PHP Installation
+## PHP Installation
+
+```shell
+d@ubuntu:~/test$ sudo apt install php php-mysql
+```
+
+위 명령어를 통해 php를 설치할 수 있습니다. `php-mysql`은 php에서 mysql을 사용할 때 필요한 라이브러리입니다.
+
+설치가 완료되었다면 php가 잘 작동하는지 확인해봅시다.
+
+```shell
+d@ubuntu:~$ cd /var/www/html
+d@ubuntu:/var/www/html$ sudo chown -R d /var/www/html
+d@ubuntu:/var/www/html$ sudo chgrp -R d /var/www/html
+```
+
+우선 웹 폴더의 권한을 세팅해줍니다. 웹 폴더의 기본적인 경로는 `/var/www/html`입니다. `chown` 과 `chgrp` 명령어를 통해 해당 폴더의 소유자와 소유그룹을 저로 변경해줍니다.  여러분은 위 명령줄에서 `d` 대신 여러분들의 계정을 입력하면 됩니다. 계정은 `id` 또는 `whoami` 명령어를 통해 확인가능합니다.
+
+```shell
+d@ubuntu:/var/www/html$ id
+uid=1000(d) gid=1000(d) groups=1000(d),4(adm),24(cdrom),27(sudo),30(dip),46(plugdev),116(lpadmin),126(sambashare)
+d@ubuntu:/var/www/html$ whoami
+d
+```
+
+이제 해당 폴더에 index.php 파일을 만들어서 다음 내용을 작성할 것 입니다.
+
+```php
+<?php
+phpinfo();
+?>
+```
+
+위에서 설명했던 `vim`을 사용하면 됩니다. 코드가 얼마 되지 않으니깐 `echo`를 통해 파일을 작성했습니다. 
+
+```shell
+d@ubuntu:/var/www/html$ echo "<?php phpinfo(); ?>" > index.php
+```
+
+위처럼 `명령어 > 파일명` 형식으로 꺽쇠를 사용하게 되면 명령어의 실행 결과 출력문을 파일로 만들어주게 됩니다.
+
+파일을 읽어보면 다음과 같이 내용이 작성되는 것을 확인할 수 있습니다.
+
+```shell
+d@ubuntu:/var/www/html$ cat index.php
+<?php phpinfo(); ?>
+```
+
+`cat` 명령어를 처음 볼텐데, 파일을 읽어주는 명령어입니다.
+
+자 이제, `http://[자신의아이피]/index.php`로 접속해보세요.
+
+![image-20200511124836120](img/image-20200511124836120.png)
+
+위처럼 뜨면 php가 정상 설치되었고 잘 작동하는겁니다.
+
+## MySQL Installation
+
+```
+
+```
+
+## Tips
+
+원격저장소 변경
+
+```
+sudo sed -i 's/us.archive.ubuntu.com/ftp.daumkakao.com/g' /etc/apt/sources.list
+sudo sed -i 's/archive.ubuntu.com/ftp.daumkakao.com/g' /etc/apt/sources.list
+sudo apt update
+```
 
