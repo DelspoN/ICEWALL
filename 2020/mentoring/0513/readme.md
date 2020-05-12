@@ -277,9 +277,190 @@ d@ubuntu:/var/www/html$ cat index.php
 
 ## MySQL Installation
 
+SQL은 **S**tructured **Q**uery **L**anguage의 약자로, 데이터베이스를 다루는 언어입니다. 서버 프로그램이 작동하다 보면 데이터를 저장도 해야하고, 그 값을 가져오기도 해야겠죠? 그 때 사용되는게 데이터베이스입니다. 데이터베이스 소프트웨어도 여러개가 있는데 우리는 가장 일반적인 MySQL을 사용할 것입니다.
+
+```shell
+sudo apt install mysql-server
 ```
 
+mysql-server를 설치해줍니다.
+
+설치가 완료되었으면 데이터베이스 설정을 해줄겁니다. `sudo mysql_secure_installation` 명령어를 통해 설정을 진행해주세요.
+
+```shell
+d@ubuntu:/var/www/html$ sudo mysql_secure_installation
+
+Securing the MySQL server deployment.
+
+Connecting to MySQL using a blank password.
+
+VALIDATE PASSWORD PLUGIN can be used to test passwords
+and improve security. It checks the strength of password
+and allows the users to set only those passwords which are
+secure enough. Would you like to setup VALIDATE PASSWORD plugin?
+
+Press y|Y for Yes, any other key for No: y
+
+There are three levels of password validation policy:
+
+LOW    Length >= 8
+MEDIUM Length >= 8, numeric, mixed case, and special characters
+STRONG Length >= 8, numeric, mixed case, special characters and dictionary                  file
+
+Please enter 0 = LOW, 1 = MEDIUM and 2 = STRONG: 1
+Please set the password for root here.
+
+New password: 
+
+Re-enter new password: 
+
+Estimated strength of the password: 50 
+Do you wish to continue with the password provided?(Press y|Y for Yes, any other key for No) : y
+By default, a MySQL installation has an anonymous user,
+allowing anyone to log into MySQL without having to have
+a user account created for them. This is intended only for
+testing, and to make the installation go a bit smoother.
+You should remove them before moving into a production
+environment.
+
+Remove anonymous users? (Press y|Y for Yes, any other key for No) : y
+Success.
+
+
+Normally, root should only be allowed to connect from
+'localhost'. This ensures that someone cannot guess at
+the root password from the network.
+
+Disallow root login remotely? (Press y|Y for Yes, any other key for No) : y
+Success.
+
+By default, MySQL comes with a database named 'test' that
+anyone can access. This is also intended only for testing,
+and should be removed before moving into a production
+environment.
+
+
+Remove test database and access to it? (Press y|Y for Yes, any other key for No) : y
+ - Dropping test database...
+Success.
+
+ - Removing privileges on test database...
+Success.
+
+Reloading the privilege tables will ensure that all changes
+made so far will take effect immediately.
+
+Reload privilege tables now? (Press y|Y for Yes, any other key for No) : y
+Success.
+
+All done! 
 ```
+
+웬만한건 다 `y`로 답하시면 되고, 비밀번호 강도는 1로 설정한 후 원하는 `root` 비밀번호를 작성해주시면 됩니다.
+
+그 후 데이터베이스에 접속해서 데이터베이스 계정을 만들어줍니다.
+
+```shell
+d@ubuntu:/var/www/html$ sudo mysql
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 5
+Server version: 5.7.30-0ubuntu0.18.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2020, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> create user 'user' identified by 'Qwer1234!';
+Query OK, 0 rows affected (0.00 sec)
+```
+
+`create user 'user' identified by 'Qwer1234!'` 쿼리를 입력하면 사용자명이 `user`이고 패스워드가 `Qwer1234!`인 계정이 생성됩니다.
+
+기본으로 존재하는 데이터베이스를 확인해봅시다. 
+
+```
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+4 rows in set (0.01 sec)
+```
+
+위 데이터베이스들은 mysql을 설치하면 기본으로 만들어지는 데이터베이스들입니다. 계정이나 로그, 설정 값들을 관리하는 데이터베이스들입니다.
+
+새로운 데이터베이스를 하나 만들어봅니다.
+
+```
+mysql> create database test default character set utf8;
+Query OK, 1 row affected (0.00 sec)
+```
+
+test라는 데이터베이스를 만드는 쿼리입니다. (`default character set utf8` 은 데이터의 인코딩 처리 방식을 utf8으로 지정해줍니다.)
+
+```
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
+| test               |
++--------------------+
+5 rows in set (0.00 sec)
+```
+
+실제로 test라는 데이터베이스가 만들어진 것을 확인할 수 있죠?
+
+이제 위에서 만든 데이터베이스 계정에 권한을 부여해줄겁니다.
+
+```
+mysql> GRANT ALL PRIVILEGES ON test.* TO 'user'@'localhost' identified by 'Qwer1234!';
+Query OK, 0 rows affected, 1 warning (0.00 sec)
+```
+
+위처럼 입력하면 user 계정이 test 데이터베이스의 모든 권한을 갖게 됩니다. 읽기, 쓰기 등 모든 권한을 갖게 되는겁니다.
+
+`quit`을 입력한 후, user 계정으로 데이터베이스에 접속해봅시다.
+
+```shell
+d@ubuntu:/var/www/html$ mysql -u user -p
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 6
+Server version: 5.7.30-0ubuntu0.18.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2020, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| test               |
++--------------------+
+2 rows in set (0.00 sec)
+
+mysql> 
+```
+
+위처럼 접속해서 데이터베이스를 확인해보면 아까랑은 다르게 보이죠? `sudo mysql`을 입력하여 접속한 것은 root 계정으로 데이터베이스에 접속했기 때문에 모든 데이터베이스가 다 보이는 것이었습니다. 반면에 user 계정은 test 데이터베이스의 권한만 가지고 있으므로 그 데이터베이스만 보이게 되는겁니다.
 
 ## Tips
 
@@ -291,3 +472,4 @@ sudo sed -i 's/archive.ubuntu.com/ftp.daumkakao.com/g' /etc/apt/sources.list
 sudo apt update
 ```
 
+우분투를 설치하면 원격저장소 주소는 해외 서버의 주소로 설정되어 있습니다. 국내에 있는 주소로 변경하면 패키지를 설치할 때 다운로드 속도가 빨라집니다. 
