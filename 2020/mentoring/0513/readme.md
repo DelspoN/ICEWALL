@@ -468,6 +468,7 @@ mysql>
 
 ```
 sudo sed -i 's/us.archive.ubuntu.com/ftp.daumkakao.com/g' /etc/apt/sources.list
+sudo sed -i 's/kr.archive.ubuntu.com/ftp.daumkakao.com/g' /etc/apt/sources.list
 sudo sed -i 's/archive.ubuntu.com/ftp.daumkakao.com/g' /etc/apt/sources.list
 sudo apt update
 ```
