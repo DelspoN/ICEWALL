@@ -25,6 +25,31 @@ login_test_get.html
 
 
 
+login_test_get.php
+
+```php
+<?php 
+	$ID = $_GET['ID'];
+	$PW = $_GET['PW'];
+	if($ID && $PW){
+        echo "You entered " . $ID . " and " . $PW;
+	}
+	else{
+		echo "<script>alert(\"No ID or PW\");</script>";
+	}
+?>
+```
+
+
+
+![image-20200519204140877](img/image-20200519204140877.png)
+
+![image-20200519204215389](img/image-20200519204215389.png)
+
+![image-20200519204241737](img/image-20200519204241737.png)
+
+
+
 login_test_post.html
 
 ```html
@@ -44,23 +69,6 @@ login_test_post.html
 
 
 
-login_test_get.php
-
-```php
-<?php 
-	$ID = $_GET['ID'];
-	$PW = $_GET['PW'];
-	if($ID && $PW){
-        echo "You entered " . $ID . " and " . $PW;
-	}
-	else{
-		echo "<script>alert(\"No ID or PW\");</script>";
-	}
-?>
-```
-
-
-
 login_test_post.php
 
 ```php
@@ -75,6 +83,16 @@ login_test_post.php
 	}
 ?>
 ```
+
+
+
+![image-20200519204332087](img/image-20200519204332087.png)
+
+![image-20200519204320847](img/image-20200519204320847.png)
+
+
+
+![98B471BA-DDC3-4DC9-A7B1-CD5C4C6686DC](img/98B471BA-DDC3-4DC9-A7B1-CD5C4C6686DC.png)
 
 
 
